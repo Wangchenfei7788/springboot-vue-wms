@@ -22,7 +22,8 @@ export default {
     </div>
 
    <el-dropdown>
-     <span>王晨飞</span><i class="el-icon-arrow-down" style="margin-left: 5px"></i>
+     <span>王晨飞</span>
+     <i class="el-icon-caret-bottom" style="margin-left: 5px"></i>
      <el-dropdown-menu slot="dropdown">
       <el-dropdown-item @click.native="toUser">个人中心</el-dropdown-item>
       <el-dropdown-item @click.native="logout">退出登录</el-dropdown-item>
