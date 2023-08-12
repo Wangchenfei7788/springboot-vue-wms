@@ -7,7 +7,7 @@ export default {
 <template v-slot:dropdown>
   <div>
    <el-dropdown>
-     <span>王小虎</span>
+     <span>王晨飞</span>
      <i class="el-icon-setting" style="margin-left: 15px"></i>
      <el-dropdown-menu>
       <el-dropdown-item>个人中心</el-dropdown-item>
