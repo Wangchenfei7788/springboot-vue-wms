@@ -18,7 +18,7 @@ export default {
     </el-aside>
 
     <el-container style="height:100%">
-      <el-header style="text-align: right; font-size: 12px;height: 100%">
+      <el-header style="text-align: right; font-size: 12px;height: 100%;border-bottom: rgba(168,168,168,0.3) 1px solid">
         <HeaderHome></HeaderHome>
       </el-header>
 
@@ -32,7 +32,7 @@ export default {
 
 <style scoped>
 .el-header {
-  background-color: #B3C0D1;
+  //background-color: #B3C0D1;
   color: #333;
   line-height: 60px;
 }
