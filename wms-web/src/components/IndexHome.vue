@@ -13,7 +13,7 @@ export default {
 
 <template>
   <el-container style="height: 100%; border: 1px solid #eee">
-    <el-aside width="200px" style="background-color: rgb(238, 241, 246);height: 100%;">
+    <el-aside width="200px" style="height: 100%;">
       <AsideHome></AsideHome>
     </el-aside>
 
@@ -32,14 +32,20 @@ export default {
 
 <style scoped>
 .el-header {
-  //background-color: #B3C0D1;
+  background-color: #00467f;
   color: #333;
   line-height: 60px;
 }
 .el-main {
   padding: 5px;
 }
-.el-aside {
-  color: #333;
+.el-menu {
+
+  line-height: 60px;
+  overflow: hidden;
 }
+
+
+
+
 </style>

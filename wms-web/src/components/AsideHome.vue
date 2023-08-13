@@ -5,53 +5,49 @@ export default {
 </script>
 
 <template>
-  <el-menu :default-openeds="['1', '3']">
-    <el-submenu index="1">
-      <template slot="title"><i class="el-icon-message"></i>导航一</template>
-      <el-menu-item-group>
-        <template slot="title">分组一</template>
-        <el-menu-item index="1-1">选项1</el-menu-item>
-        <el-menu-item index="1-2">选项2</el-menu-item>
-      </el-menu-item-group>
-      <el-menu-item-group title="分组2">
-        <el-menu-item index="1-3">选项3</el-menu-item>
-      </el-menu-item-group>
-      <el-submenu index="1-4">
-        <template slot="title">选项4</template>
-        <el-menu-item index="1-4-1">选项4-1</el-menu-item>
-      </el-submenu>
-    </el-submenu>
-    <el-submenu index="2">
-      <template slot="title"><i class="el-icon-menu"></i>导航二</template>
-      <el-menu-item-group>
-        <template slot="title">分组一</template>
-        <el-menu-item index="2-1">选项1</el-menu-item>
-        <el-menu-item index="2-2">选项2</el-menu-item>
-      </el-menu-item-group>
-      <el-menu-item-group title="分组2">
-        <el-menu-item index="2-3">选项3</el-menu-item>
-      </el-menu-item-group>
-      <el-submenu index="2-4">
-        <template slot="title">选项4</template>
-        <el-menu-item index="2-4-1">选项4-1</el-menu-item>
-      </el-submenu>
-    </el-submenu>
-    <el-submenu index="3">
-      <template slot="title"><i class="el-icon-setting"></i>导航三</template>
-      <el-menu-item-group>
-        <template slot="title">分组一</template>
-        <el-menu-item index="3-1">选项1</el-menu-item>
-        <el-menu-item index="3-2">选项2</el-menu-item>
-      </el-menu-item-group>
-      <el-menu-item-group title="分组2">
-        <el-menu-item index="3-3">选项3</el-menu-item>
-      </el-menu-item-group>
-      <el-submenu index="3-4">
-        <template slot="title">选项4</template>
-        <el-menu-item index="3-4-1">选项4-1</el-menu-item>
-      </el-submenu>
-    </el-submenu>
+
+  <el-menu style="height: 100%">
+    <el-menu-item style="padding: 0;height: 70px" >
+
+      <p style="text-align: center"><i><img src="../assets/WMS_Icons_.png" style="height: 60px;width: 60px;margin-top: 5px"></i></p>
+
+    </el-menu-item>
+    <el-menu-item>
+      <i class="el-icon-s-home"></i>
+      <span >首页</span>
+    </el-menu-item>
+
+    <el-menu-item>
+      <i class="el-icon-s-custom"></i>
+      <span>管理员管理</span>
+    </el-menu-item>
+
+    <el-menu-item>
+      <i class="el-icon-user-solid"></i>
+      <span>用户管理</span>
+    </el-menu-item>
+
+    <el-menu-item>
+      <i class="el-icon-s-shop"></i>
+      <span>仓库管理</span>
+    </el-menu-item>
+
+    <el-menu-item>
+      <i class="el-icon-s-grid"></i>
+      <span>产品分类管理</span>
+    </el-menu-item>
+
+    <el-menu-item>
+      <i class="el-icon-s-goods"></i>
+      <span>产品管理</span>
+    </el-menu-item>
+
+    <el-menu-item>
+      <i class="el-icon-s-order"></i>
+      <span>记录管理</span>
+    </el-menu-item>
   </el-menu>
+
 </template>
 
 <style scoped>
