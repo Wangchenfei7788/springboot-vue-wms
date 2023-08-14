@@ -4,12 +4,14 @@ package com.wms.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wms.common.QueryPageParam;
 import com.wms.common.Result;
 import com.wms.entity.User;
 import com.wms.service.UserService;
 
+import freemarker.template.utility.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,7 +60,9 @@ public class UserController {
    @PostMapping("/listP")
    public List<User> listP(@RequestBody User user){
        LambdaQueryWrapper<User> lambdaQueryWrapper=new LambdaQueryWrapper();
-       lambdaQueryWrapper.like(User::getName,user.getName());
+       if(StringUtils.isNotBlank(user.getName())){
+           lambdaQueryWrapper.like(User::getName,user.getName());
+       }
        return userService.list(lambdaQueryWrapper);
    }
     @PostMapping("/listPage")
