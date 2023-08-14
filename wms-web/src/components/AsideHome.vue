@@ -3,8 +3,11 @@ export default {
   name: "AsideHome",
   data(){
     return{
-      isCollapse:false
+     //isCollapse:false
     }
+  },
+  props:{
+    isCollapse:Boolean
   }
 }
 </script>
@@ -17,6 +20,7 @@ export default {
       active-text-color="#00467f"
       default-active="/Home"
       :collapse="isCollapse"
+      :collapse-transition="false"
       style="height: 100%;
       border-right: none">
     <el-menu-item style="padding: 0;height: 70px" >
@@ -26,37 +30,37 @@ export default {
     </el-menu-item>
     <el-menu-item index="/Home">
       <i class="el-icon-s-home"></i>
-      <span >首页</span>
+      <span slot="title">首页</span>
     </el-menu-item>
 
     <el-menu-item index="/Custom">
       <i class="el-icon-s-custom"></i>
-      <span>管理员管理</span>
+      <span slot="title">管理员管理</span>
     </el-menu-item>
 
     <el-menu-item index="/User">
       <i class="el-icon-user-solid"></i>
-      <span>用户管理</span>
+      <span slot="title">用户管理</span>
     </el-menu-item>
 
     <el-menu-item index="/Shop">
       <i class="el-icon-s-shop"></i>
-      <span>仓库管理</span>
+      <span slot="title">仓库管理</span>
     </el-menu-item>
 
     <el-menu-item index="/Grid">
       <i class="el-icon-s-grid"></i>
-      <span>产品分类管理</span>
+      <span slot="title">产品分类管理</span>
     </el-menu-item>
 
     <el-menu-item index="/Good">
       <i class="el-icon-s-goods"></i>
-      <span>产品管理</span>
+      <span slot="title">产品管理</span>
     </el-menu-item>
 
     <el-menu-item index="/Order">
       <i class="el-icon-s-order"></i>
-      <span>记录管理</span>
+      <span slot="title">记录管理</span>
     </el-menu-item>
   </el-menu>
 

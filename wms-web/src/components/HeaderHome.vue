@@ -1,12 +1,18 @@
 <script>
 export default {
   name: "HeaderHome",
+  props:{
+    icon:String
+  },
   methods:{
     toUser(){
       console.log('touser')
     },
     logout(){
       console.log('logout')
+    },
+    collapse(){
+      this.$emit('doCollapse')
     }
   }
 }
@@ -15,7 +21,7 @@ export default {
 <template>
   <div style="display: flex;line-height: 70px">
     <div style="font-size: 21px">
-      <i  style="color: white" class="el-icon-s-fold"></i>
+      <i style="color: white;cursor: pointer" :class="icon" @click="collapse"></i>
     </div>
     <div style="flex: 1;text-align: center;font-size: 34px">
       <span style="color: white">仓库管理系统</span>
