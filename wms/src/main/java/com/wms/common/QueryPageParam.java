@@ -1,6 +1,7 @@
 package com.wms.common;
 
 import lombok.Data;
+import org.springframework.beans.factory.support.ManagedMap;
 
 import java.util.HashMap;
 
@@ -13,7 +14,7 @@ public class QueryPageParam {
     private int pageSize=PAGE_SIZE;
     private int pageNum=PAGE_NUM;
 
-    private HashMap param;
+    private HashMap param = new HashMap();
 
 
 }

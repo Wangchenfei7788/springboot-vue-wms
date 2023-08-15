@@ -58,12 +58,13 @@ public class UserController {
    }
    //查询（模糊，匹配）
    @PostMapping("/listP")
-   public List<User> listP(@RequestBody User user){
+   public Result listP(@RequestBody User user){
        LambdaQueryWrapper<User> lambdaQueryWrapper=new LambdaQueryWrapper();
        if(StringUtils.isNotBlank(user.getName())){
            lambdaQueryWrapper.like(User::getName,user.getName());
        }
-       return userService.list(lambdaQueryWrapper);
+
+       return Result.suc(userService.list(lambdaQueryWrapper));
    }
     @PostMapping("/listPage")
     public List<User> listPage(@RequestBody QueryPageParam query){
@@ -114,7 +115,7 @@ public class UserController {
         System.out.println("total=="+result.getTotal());
         return result.getRecords();
     }
-    @PostMapping("/listPageC1")
+    @PostMapping("/listPageC1")//分页
     public Result listPageC1(@RequestBody QueryPageParam query){
 
         System.out.println("num==="+query.getPageNum());
@@ -129,7 +130,9 @@ public class UserController {
         page.setSize(query.getPageSize());
 
         LambdaQueryWrapper<User> lambdaQueryWrapper=new LambdaQueryWrapper();
-        lambdaQueryWrapper.like(User::getName,name);
+        if(StringUtils.isNotBlank(name) && !"null".equals(name)){
+            lambdaQueryWrapper.like(User::getName,name);
+        }
 
         //IPage result = userService.pageC(page);
         IPage result = userService.pageCC(page,lambdaQueryWrapper);

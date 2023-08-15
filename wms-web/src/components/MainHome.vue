@@ -3,21 +3,43 @@
 
 export default {
   name: "MainHome",
-  data() {
+  data() {//默认值
     return {
-      tableData: []
+      tableData: [],
+      pageSize:5,
+      pageNum:1,
+      total:0
     }
   },
   methods:{
+    handleSizeChange(val) {
+      console.log(`每页 ${val} 条`);
+      this.pageSize=val
+      this.loadPost()
+    },
+    handleCurrentChange(val) {
+      console.log(`当前页: ${val}`);
+      this.pageNum=val
+      this.loadPost()
+    },
     loadGet(){
       this.$axios.get(this.$httpUrl+'/user/list').then(res=>res.data).then(res=>{
         console.log(res)
       })
     },
     loadPost(){
-      this.$axios.post(this.$httpUrl+'/user/listP',{}).then(res=>res.data).then(res=>{
+      this.$axios.post(this.$httpUrl+'/user/listPageC1',{
+        pageSize:this.pageSize,
+        pageNum:this.pageNum
+      }).then(res=>res.data).then(res=>{
         console.log(res)
-        this.tableData=res
+        if(res.code==200){
+          this.tableData=res.data
+          this.total=res.total
+        }else {
+          alert('获取数据失败')
+        }
+
       })
     }
   },
@@ -29,6 +51,7 @@ export default {
 </script>
 
 <template>
+  <div>
   <el-table style="width: 100%"
             stripe
             border
@@ -42,7 +65,7 @@ export default {
     </el-table-column>
     <el-table-column prop="no" label="账号" width="150">
     </el-table-column>
-    <el-table-column prop="name" label="姓名" width="130">
+    <el-table-column prop="name" label="姓名" width="150">
     </el-table-column>
     <el-table-column prop="age" label="年龄" width="100">
     </el-table-column>
@@ -63,9 +86,21 @@ export default {
     </el-table-column>
     <el-table-column prop="phone" label="电话" width="180">
     </el-table-column>
-    <el-table-column prop="operate" label="操作">
+    <el-table-column prop="operate" label="操作" width="">
+      <el-button size="small" type="primary">编辑</el-button>
+      <el-button size="small" type="danger">删除</el-button>
     </el-table-column>
   </el-table>
+    <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="pageNum"
+        :page-sizes="[2, 5, 10, 20]"
+        :page-size="pageSize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total">
+    </el-pagination>
+  </div>
 </template>
 
 <style scoped>

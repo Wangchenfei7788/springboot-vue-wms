@@ -21,7 +21,7 @@ export default {
       default-active="/Home"
       :collapse="isCollapse"
       :collapse-transition="false"
-      style="height: 100%;
+      style="height: 100vh;
       border-right: none">
     <el-menu-item style="padding: 0;height: 70px" >
 
@@ -62,7 +62,9 @@ export default {
       <i class="el-icon-s-order"></i>
       <span slot="title">记录管理</span>
     </el-menu-item>
+
   </el-menu>
+
 
 </template>
 
@@ -73,4 +75,5 @@ export default {
 .el-menu-item i{
   color: white;
 }
+
 </style>
