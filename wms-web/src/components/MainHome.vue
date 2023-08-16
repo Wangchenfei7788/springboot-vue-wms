@@ -6,9 +6,10 @@ export default {
   data() {//默认值
     return {
       tableData: [],
-      pageSize:5,
+      pageSize:10,
       pageNum:1,
-      total:0
+      total:0,
+      name: ''
     }
   },
   methods:{
@@ -30,12 +31,16 @@ export default {
     loadPost(){
       this.$axios.post(this.$httpUrl+'/user/listPageC1',{
         pageSize:this.pageSize,
-        pageNum:this.pageNum
+        pageNum:this.pageNum,
+        param:{
+         name:this.name
+        }
       }).then(res=>res.data).then(res=>{
         console.log(res)
         if(res.code==200){
           this.tableData=res.data
           this.total=res.total
+          console.log(name)
         }else {
           alert('获取数据失败')
         }
@@ -52,6 +57,11 @@ export default {
 
 <template>
   <div>
+    <div style="margin-bottom: 5px">
+      <el-input v-model="name" placeholder="输入要查询的姓名" suffix-icon="el-icon-search" style=" width:200px"></el-input>
+      <el-button type="primary" style="margin-left: 8px" @click="loadPost">查询</el-button>
+      <el-button type="info">重置</el-button>
+    </div>
   <el-table style="width: 100%"
             stripe
             border
@@ -95,7 +105,7 @@ export default {
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="pageNum"
-        :page-sizes="[2, 5, 10, 20]"
+        :page-sizes="[ 5, 10, 20, 30]"
         :page-size="pageSize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
