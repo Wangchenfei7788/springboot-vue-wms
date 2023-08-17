@@ -9,7 +9,17 @@ export default {
       pageSize:10,
       pageNum:1,
       total:0,
-      name: ''
+      name: '',
+      sex:'' ,
+      sexs:[
+        {
+          value:'1',
+          label:'男'
+        },{
+          value:'0',
+          label: '女'
+        }
+      ]
     }
   },
   methods:{
@@ -28,12 +38,17 @@ export default {
         console.log(res)
       })
     },
+    resetParam(){
+      this.name=''
+      this.sex=''
+    },
     loadPost(){
       this.$axios.post(this.$httpUrl+'/user/listPageC1',{
         pageSize:this.pageSize,
         pageNum:this.pageNum,
         param:{
-         name:this.name
+         name:this.name,
+          sex:this.sex
         }
       }).then(res=>res.data).then(res=>{
         console.log(res)
@@ -47,6 +62,7 @@ export default {
 
       })
     }
+
   },
   beforeMount() {
     //this.loadGet();
@@ -59,8 +75,16 @@ export default {
   <div>
     <div style="margin-bottom: 5px">
       <el-input v-model="name" placeholder="输入要查询的姓名" suffix-icon="el-icon-search" style=" width:200px"></el-input>
+      <el-select v-model="sex" filterable placeholder="请选择性别" style="margin-left: 8px">
+        <el-option
+            v-for="item in sexs"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+        </el-option>
+      </el-select>
       <el-button type="primary" style="margin-left: 8px" @click="loadPost">查询</el-button>
-      <el-button type="info">重置</el-button>
+      <el-button type="info" @click="resetParam">重置</el-button>
     </div>
   <el-table style="width: 100%"
             stripe
