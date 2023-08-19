@@ -19,10 +19,26 @@ export default {
           value:'0',
           label: '女'
         }
-      ]
+      ],
+      dialogVisible:false,
+      form:{
+        name:''
+      }
     }
   },
   methods:{
+    add(){
+      this.dialogVisible = true
+    },
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {
+          });
+
+    },
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
       this.pageSize=val
@@ -83,8 +99,9 @@ export default {
             :value="item.value">
         </el-option>
       </el-select>
-      <el-button type="primary" style="margin-left: 8px" @click="loadPost">查询</el-button>
-      <el-button type="info" @click="resetParam">重置</el-button>
+      <el-button plain type="primary" style="margin-left: 8px" @click="loadPost">查询</el-button>
+      <el-button plain type="info" @click="resetParam">重置</el-button>
+      <el-button plain type="success" style="margin-left: 8px" @click="add">新增</el-button>
     </div>
   <el-table style="width: 100%"
             stripe
@@ -121,8 +138,8 @@ export default {
     <el-table-column prop="phone" label="电话" width="180">
     </el-table-column>
     <el-table-column prop="operate" label="操作" width="">
-      <el-button size="small" type="primary">编辑</el-button>
-      <el-button size="small" type="danger">删除</el-button>
+      <el-button size="small" plain type="primary">编辑</el-button>
+      <el-button size="small" plain type="danger">删除</el-button>
     </el-table-column>
   </el-table>
     <el-pagination
@@ -134,6 +151,26 @@ export default {
         layout="total, sizes, prev, pager, next, jumper"
         :total="total">
     </el-pagination>
+
+    <!--新增弹出窗口-->
+    <el-dialog
+        title="提示"
+        :visible.sync="dialogVisible"
+        width="30%"
+        :before-close="handleClose">
+
+      <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="姓名">
+          <el-col :span="11">
+          <el-input v-model="form.name"></el-input>
+          </el-col>
+        </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+  </span>
+    </el-dialog>
   </div>
 </template>
 
