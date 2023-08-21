@@ -11,7 +11,7 @@ import com.wms.common.Result;
 import com.wms.entity.User;
 import com.wms.service.UserService;
 
-import freemarker.template.utility.StringUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,9 +38,15 @@ public class UserController {
 
    //新增
    @PostMapping("/save")
-   public boolean save(@RequestBody User user){
-       return userService.save(user);
+   public Result save(@RequestBody User user){
+       return userService.save(user)?Result.suc():Result.fail();
    }
+   //账号唯一性检查
+   @GetMapping("/findByNo")
+    public Result findByNo(@RequestParam String no){
+      List list = userService.lambdaQuery().eq(User::getNo,no).list();
+      return list.size()>0?Result.suc(list):Result.fail();
+    }
    //修改
    @PostMapping("/mod")
    public boolean mod(@RequestBody User user){
