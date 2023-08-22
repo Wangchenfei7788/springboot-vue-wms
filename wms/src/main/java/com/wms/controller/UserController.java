@@ -47,6 +47,11 @@ public class UserController {
       List list = userService.lambdaQuery().eq(User::getNo,no).list();
       return list.size()>0?Result.suc(list):Result.fail();
     }
+    //更新
+    @PostMapping("/update")
+    public Result update(@RequestBody User user){
+        return userService.updateById(user)?Result.suc():Result.fail();
+    }
    //修改
    @PostMapping("/mod")
    public boolean mod(@RequestBody User user){

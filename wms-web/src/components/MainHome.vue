@@ -40,7 +40,9 @@ export default {
         }
       ],
       dialogVisible:false,
+      dialogVisibleMod:false,
       form:{
+        id:'',
         no:'',
         name:'',
         password:'',
@@ -93,28 +95,83 @@ export default {
         this.resetForm()
       })
     },
+    doSave(){
+      this.$axios.post(this.$httpUrl+'/user/save',this.form).then(res=>res.data).then(res=>{
+        console.log(res)
+        if(res.code==200){
+          this.$notify({
+            title: '成功',
+            message: '新增成功',
+            type: 'success'
+          });
+          this.dialogVisible =false
+          this.loadPost()
+        }else {
+          this.$notify.error({
+            title: '错误',
+            message: '新增失败',
+            type:'error'
+          });
+        }
+
+      })
+    },
+    doMod(){
+      this.$axios.post(this.$httpUrl+'/user/update',this.form).then(res=>res.data).then(res=>{
+        console.log(res)
+        if(res.code==200){
+          this.$notify({
+            title: '成功',
+            message: '编辑成功',
+            type: 'success'
+          });
+          this.dialogVisibleMod =false
+          this.loadPost()
+        }else {
+          this.$notify.error({
+            title: '错误',
+            message: '编辑失败',
+            type:'error'
+          });
+        }
+
+      })
+    },
+    mod(row){
+      console.log(row)
+
+
+      //显示编辑框
+      this.dialogVisibleMod= true
+
+      this.$nextTick(()=>{
+
+        //赋值到表单
+        this.form.id = row.id
+        this.form.no = row.no
+        this.form.name =row.name
+        this.form.password = row.password
+        this.form.sex = row.sex+''
+        this.form.age = row.age+''
+        this.form.phone = row.phone
+        this.form.roleId = row.roleId+''
+
+
+      })
+
+    },
+    del(){
+
+    },
     save(){
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.$axios.post(this.$httpUrl+'/user/save',this.form).then(res=>res.data).then(res=>{
-            console.log(res)
-            if(res.code==200){
-              this.$notify({
-                title: '成功',
-                message: '新增成功',
-                type: 'success'
-              });
-              this.dialogVisible =false
-              this.loadPost()
-            }else {
-              this.$notify.error({
-                title: '错误',
-                message: '新增失败',
-                type:'error'
-              });
-            }
+          if(this.form.id){
+            this.doMod();
+          }else {
+            this.doSave();
+          }
 
-          })
         } else {
           console.log('error submit!!');
           return false;
@@ -230,8 +287,10 @@ export default {
     <el-table-column prop="phone" label="电话" width="180">
     </el-table-column>
     <el-table-column prop="operate" label="操作" width="">
-      <el-button size="small" plain type="primary">编辑</el-button>
-      <el-button size="small" plain type="danger">删除</el-button>
+      <template slot-scope="scope">
+      <el-button size="small" plain type="primary" @click="mod(scope.row)">编辑</el-button>
+      <el-button size="small" plain type="danger" @click="del">删除</el-button>
+      </template>
     </el-table-column>
   </el-table>
     <el-pagination style="float: right"
@@ -246,10 +305,11 @@ export default {
 
     <!--新增弹出窗口-->
     <el-dialog
-        title="提示"
+        title="新增"
         :visible.sync="dialogVisible"
         width="30%"
-        :before-close="handleClose">
+        :before-close="handleClose"
+        @close="resetForm">
 
       <el-form ref="form" :rules="rules" :model="form" label-width="80px">
         <el-form-item label="账号" prop="no">
@@ -266,7 +326,7 @@ export default {
 
         <el-form-item label="密码" prop="password">
           <el-col :span="20">
-            <el-input v-model="form.password"></el-input>
+            <el-input show-password v-model="form.password"></el-input>
           </el-col>
         </el-form-item>
 
@@ -301,6 +361,68 @@ export default {
         </el-form>
         <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
+    <el-button type="primary" @click="save">确 定</el-button>
+  </span>
+    </el-dialog>
+
+    <!--编辑弹出窗口-->
+    <el-dialog
+        title="编辑"
+        :visible.sync="dialogVisibleMod"
+        width="30%"
+        :before-close="handleClose"
+         @close="resetForm">
+
+      <el-form ref="form" :rules="rules" :model="form" label-width="80px">
+        <el-form-item label="账号" prop="no">
+          <el-col :span="20">
+            <el-input v-model="form.no"></el-input>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="姓名" prop="name">
+          <el-col :span="20">
+            <el-input v-model="form.name"></el-input>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="密码" prop="password">
+          <el-col :span="20">
+            <el-input show-password v-model="form.password"></el-input>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="性别" prop="sex">
+          <el-radio-group v-model="form.sex">
+            <el-radio label="1">男</el-radio>
+            <el-radio label="0">女</el-radio>
+          </el-radio-group>
+        </el-form-item>
+
+        <el-form-item label="年龄" prop="age">
+          <el-col :span="20">
+            <el-input v-model="form.age"></el-input>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="电话" prop="phone">
+          <el-col :span="20">
+            <el-input v-model="form.phone"></el-input>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="角色" prop="roleId">
+          <el-col :span="10">
+            <el-radio-group v-model="form.roleId">
+              <el-radio label="0" style="margin-top: 8px">超级管理员</el-radio>
+              <el-radio style="margin-bottom: 8px;margin-top: 8px" label="1">管理员</el-radio>
+              <el-radio label="2">普通账号</el-radio>
+            </el-radio-group>
+          </el-col>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisibleMod = false">取 消</el-button>
     <el-button type="primary" @click="save">确 定</el-button>
   </span>
     </el-dialog>
