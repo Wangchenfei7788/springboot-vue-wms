@@ -52,6 +52,11 @@ public class UserController {
     public Result update(@RequestBody User user){
         return userService.updateById(user)?Result.suc():Result.fail();
     }
+    //删除
+    @GetMapping("/del")
+    public Result del(@RequestParam String id){
+        return userService.removeById(id)?Result.suc():Result.fail();
+    }
    //修改
    @PostMapping("/mod")
    public boolean mod(@RequestBody User user){

@@ -33,7 +33,7 @@ export default {
 
 <template>
   <el-container style="height: 100%; border: 1px solid #eee">
-    <el-aside :width="aside_width" style="height: 100%;">
+    <el-aside :width="aside_width" >
       <AsideHome :isCollapse="isCollapse"></AsideHome>
     </el-aside>
 

@@ -160,7 +160,28 @@ export default {
       })
 
     },
-    del(){
+    del(id){
+
+
+        this.$axios.get(this.$httpUrl+'/user/del?id='+id).then(res=>res.data).then(res=>{
+          console.log(res)
+          if(res.code==200){
+            this.$message({
+
+              message: '删除成功',
+              type: 'success'
+            });
+
+            this.loadPost()
+          }else {
+            this.$message.error({
+
+              message: '删除失败',
+              type:'error'
+            });
+          }
+
+        })
 
     },
     save(){
@@ -289,7 +310,14 @@ export default {
     <el-table-column prop="operate" label="操作" width="">
       <template slot-scope="scope">
       <el-button size="small" plain type="primary" @click="mod(scope.row)">编辑</el-button>
-      <el-button size="small" plain type="danger" @click="del">删除</el-button>
+        <el-popconfirm
+            title="确定删除吗？"
+            @confirm="del(scope.row.id)"
+            style="margin-left: 8px"
+        >
+          <el-button slot="reference" size="small" plain type="danger">删除</el-button>
+        </el-popconfirm>
+
       </template>
     </el-table-column>
   </el-table>
