@@ -1,19 +1,20 @@
 <template>
   <div id="app">
-    <IndexHome></IndexHome>
+    <router-view/>
+
   </div>
 </template>
 
 <script>
 
 
-import IndexHome from "@/components/IndexHome.vue";
+//import IndexHome from "@/components/IndexHome.vue";
 
 
 export default {
   name: 'App',
   components: {
-    IndexHome,
+
 
   }
 }

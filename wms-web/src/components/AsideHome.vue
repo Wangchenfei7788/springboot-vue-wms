@@ -15,9 +15,9 @@ export default {
 <template>
 
   <el-menu
-      background-color="#00467f"
+      background-color="#313888"
       text-color="white"
-      active-text-color="#00467f"
+      active-text-color="#313888"
       default-active="/Home"
       :collapse="isCollapse"
       :collapse-transition="false"
@@ -71,6 +71,9 @@ export default {
 <style scoped>
 .el-menu-item.is-active{
   background-color: white !important;
+}
+.el-menu-item.is-active i{
+ color: #3f3c8b !important;
 }
 .el-menu-item i{
   color: white;

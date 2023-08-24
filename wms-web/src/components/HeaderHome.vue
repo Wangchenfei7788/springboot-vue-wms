@@ -1,6 +1,11 @@
 <script>
 export default {
   name: "HeaderHome",
+  data(){
+    return {
+      user:JSON.parse(sessionStorage.getItem('CurUser'))
+    }
+  },
   props:{
     icon:String
   },
@@ -10,6 +15,30 @@ export default {
     },
     logout(){
       console.log('logout')
+
+
+      this.$confirm('确定退出登录吗？', '警告', {
+        confirmButtonText: '确定',  //确认按钮的文字显示
+        type: 'warning',
+        //center: true, //文字居中显示
+
+      })
+          .then(() => {
+           this.$message({
+             type:"success",
+             message:"已退出登录"
+           })
+            this.$router.push('/')
+            sessionStorage.clear()
+          })
+          .catch(() => {
+            this.$message({
+              type:"info",
+              message:"已取消退出登录"
+            })
+          });
+
+
     },
     collapse(){
       this.$emit('doCollapse')
@@ -28,7 +57,7 @@ export default {
     </div>
 
    <el-dropdown>
-     <span style="color: white">王晨飞</span>
+     <span style="color: white">{{user.name}}</span>
      <i class="el-icon-caret-bottom" style="margin-left: 5px;color: white"></i>
      <el-dropdown-menu slot="dropdown">
       <el-dropdown-item @click.native="toUser">个人中心</el-dropdown-item>
