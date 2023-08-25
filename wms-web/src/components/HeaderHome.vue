@@ -12,6 +12,8 @@ export default {
   methods:{
     toUser(){
       console.log('touser')
+
+      this.$router.push('/HomeHome')
     },
     logout(){
       console.log('logout')
@@ -43,6 +45,9 @@ export default {
     collapse(){
       this.$emit('doCollapse')
     }
+  },
+  created() {
+    this.$router.push("/HomeHome")
   }
 }
 </script>

@@ -18,9 +18,10 @@ export default {
       background-color="#313888"
       text-color="white"
       active-text-color="#313888"
-      default-active="/Home"
+      default-active="/HomeHome"
       :collapse="isCollapse"
       :collapse-transition="false"
+       router
       style="height: 100vh;
       border-right: none">
     <el-menu-item style="padding: 0;height: 70px" >
@@ -28,7 +29,7 @@ export default {
       <p style="text-align: center"><i><img src="../assets/WMS_Icons_.png" style="height: 60px;width: 60px;margin-top: 5px"></i></p>
 
     </el-menu-item>
-    <el-menu-item index="/Home">
+    <el-menu-item index="/HomeHome">
       <i class="el-icon-s-home"></i>
       <span slot="title">首页</span>
     </el-menu-item>

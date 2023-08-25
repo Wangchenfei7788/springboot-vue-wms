@@ -6,7 +6,7 @@ import MainHome from "@/components/MainHome.vue";
 
 export default {
   name:"IndexHome",
-  components: {MainHome, HeaderHome, AsideHome},
+  components: { HeaderHome, AsideHome},
   data(){
     return{
       isCollapse:false,
@@ -43,7 +43,8 @@ export default {
       </el-header>
 
       <el-main style="height: 100%">
-        <MainHome></MainHome>
+        <!-- <MainHome></MainHome> -->
+        <router-view/>
       </el-main>
     </el-container>
   </el-container>
