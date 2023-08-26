@@ -42,7 +42,7 @@ export default {
         <HeaderHome @doCollapse="doCollapse" :icon="icon"></HeaderHome>
       </el-header>
 
-      <el-main style="height: 100%">
+      <el-main style="height: 100%;padding: 0">
         <!-- <MainHome></MainHome> -->
         <router-view/>
       </el-main>

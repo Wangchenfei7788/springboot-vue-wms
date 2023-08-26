@@ -92,8 +92,8 @@ export default {
     position: absolute;
     top: 50%;
     left: 50%;
-    margin-top: -200px;
-    margin-left: -250px;
+    margin-top: -180px;
+    margin-left: -225px;
     width: 450px;
     height: 330px;
     background: #fff;
