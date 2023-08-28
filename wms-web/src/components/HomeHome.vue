@@ -1,6 +1,7 @@
 <script>
 import DateUtils from "./DateUtils";
 
+
 export default {
   name: "HomeHome",
   components: {DateUtils},
@@ -23,9 +24,10 @@ export default {
 </script>
 
 <template>
-  <div style="text-align: center;background-color: #f1f1f3;height: 100%;padding: 0px;margin: 0px;">
-    <h1 style="font-size: 50px;">{{ '欢迎你！' + user.name }}</h1>
-    <el-descriptions title="个人中心" style="margin: 5px;" :column="2" size="40" border>
+  <div style="text-align: center;height: 100%;padding: 0px;margin: 0px;">
+    <h1 style="font-size: 50px; ">{{ '欢迎你！' + user.name }}</h1>
+    <DateUtils></DateUtils>
+    <el-descriptions title="个人中心" style="margin: 5px; background-color: white;" :column="2" size="40" border >
       <el-descriptions-item >
         <template slot="label">
           <i class="el-icon-s-custom"></i>
@@ -65,10 +67,14 @@ export default {
       </el-descriptions-item>
     </el-descriptions>
 
-    <DateUtils></DateUtils>
+
+
   </div>
+
 </template>
 
 <style scoped>
-
+div{
+ //background: url("bg.jpg") no-repeat;
+}
 </style>

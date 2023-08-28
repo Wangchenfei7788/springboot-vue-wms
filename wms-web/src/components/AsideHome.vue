@@ -1,9 +1,38 @@
 <script>
+import AdminManger from "@/components/admin/AdminManger.vue";
+
 export default {
   name: "AsideHome",
   data(){
     return{
      //isCollapse:false
+      menu:[
+        {
+          nenuClick:'AdminManger',
+          menuName:'管理员管理',
+          menuIcon:'el-icon-s-custom'
+        },{
+          nenuClick:'UserManger',
+          menuName:'用户管理',
+          menuIcon:'el-icon-s-custom'
+        },{
+          nenuClick:'StorageManger',
+          menuName:'仓库管理',
+          menuIcon:'el-icon-s-custom'
+        },{
+          nenuClick:'GoodTypeManger',
+          menuName:'产品分类管理',
+          menuIcon:'el-icon-s-grid'
+        },{
+          nenuClick:'GoodManger',
+          menuName:'产品管理',
+          menuIcon:'el-icon-s-goods'
+        },{
+          nenuClick:'RecordManger',
+          menuName:'记录管理',
+          menuIcon:'el-icon-s-order'
+        }
+      ]
     }
   },
   props:{
@@ -34,36 +63,10 @@ export default {
       <span slot="title">首页</span>
     </el-menu-item>
 
-    <el-menu-item index="/Custom">
-      <i class="el-icon-s-custom"></i>
-      <span slot="title">管理员管理</span>
+    <el-menu-item :index="'/'+item.nenuClick" v-for="(item,i) in menu" :key="i">
+      <i :class="item.menuIcon"></i>
+      <span slot="title">{{ item.menuName }}</span>
     </el-menu-item>
-
-    <el-menu-item index="/User">
-      <i class="el-icon-user-solid"></i>
-      <span slot="title">用户管理</span>
-    </el-menu-item>
-
-    <el-menu-item index="/Shop">
-      <i class="el-icon-s-shop"></i>
-      <span slot="title">仓库管理</span>
-    </el-menu-item>
-
-    <el-menu-item index="/Grid">
-      <i class="el-icon-s-grid"></i>
-      <span slot="title">产品分类管理</span>
-    </el-menu-item>
-
-    <el-menu-item index="/Good">
-      <i class="el-icon-s-goods"></i>
-      <span slot="title">产品管理</span>
-    </el-menu-item>
-
-    <el-menu-item index="/Order">
-      <i class="el-icon-s-order"></i>
-      <span slot="title">记录管理</span>
-    </el-menu-item>
-
   </el-menu>
 
 

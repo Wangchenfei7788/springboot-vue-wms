@@ -32,7 +32,7 @@ export default {
 </script>
 
 <template>
-  <el-container style="height: 100%; border: 1px solid #eee">
+  <el-container style="height: 100%;margin: 0;padding: 0; border: 1px solid #eee">
     <el-aside :width="aside_width" >
       <AsideHome :isCollapse="isCollapse"></AsideHome>
     </el-aside>
@@ -65,8 +65,4 @@ export default {
   line-height: 60px;
   overflow: hidden;
 }
-
-
-
-
 </style>

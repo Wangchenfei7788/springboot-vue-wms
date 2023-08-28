@@ -60,13 +60,13 @@ export default {
 </script>
 
 <template>
-  <div style="padding: 30px;font-size: 30px;">
+  <div style="padding: 30px;font-size: 30px; background-color: white">
         <span class="time" id="time">
-            今天是：<span class="date">{{ nowTime }}</span>
-            <span class="hour" style="margin-left: 5px;">{{ time.hour }}</span>
-            <a class="split">:</a>
-            <span class="minitus">{{ time.minitus }}</span>
-            <a class="split">:</a>
+            <span class="date">{{ nowTime }}</span>
+            <span class="hour" style="margin-left: 8px;">{{ time.hour }}</span>
+            <a>:</a>
+            <span class="minitus" >{{ time.minitus }}</span>
+            <a>:</a>
             <span class="seconds">{{ time.seconds }}</span>
         </span>
   </div>
@@ -93,5 +93,8 @@ export default {
   50% {
     opacity: 0;
   }
+}
+div{
+  background-color: white !important;
 }
 </style>
