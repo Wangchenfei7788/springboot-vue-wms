@@ -1,4 +1,6 @@
 //路由文件
+
+
 import VueRouter from "vue-router";
 const routes = [
     {
@@ -9,7 +11,7 @@ const routes = [
     },
     {
         path:'/IndexHome',
-        name:'login',
+        name:'index',
         component:()=>import('../components/IndexHome.vue'),
         children:[
             {
@@ -67,16 +69,24 @@ const routes = [
                 meta:{
                     title:'记录管理'
                 }
-            }
+            },
         ]
     }
 ]
-    const router =new VueRouter({
-        mode:'history',
-        routes
-    })
+const router = new VueRouter({
+    mode: 'history',
+    routes
+})
+
+export function resetRouter() {
+    router.matcher = new VueRouter({
+        mode: 'history',
+        routes: []
+    }).matcher
+}
+
 const VueRouterPush = VueRouter.prototype.push
-VueRouter.prototype.push = function push (to) {
+VueRouter.prototype.push = function push(to) {
     return VueRouterPush.call(this, to).catch(err => err)
 }
-export  default router;
+export default router;

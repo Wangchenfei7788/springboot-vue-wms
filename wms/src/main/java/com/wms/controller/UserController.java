@@ -8,7 +8,9 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wms.common.QueryPageParam;
 import com.wms.common.Result;
+import com.wms.entity.Menu;
 import com.wms.entity.User;
+import com.wms.service.MenuService;
 import com.wms.service.UserService;
 
 
@@ -31,6 +33,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private MenuService menuService;
     @GetMapping("/list")
    public List<User> list(){
        return userService.list();
@@ -59,7 +63,17 @@ public class UserController {
         List list = userService.lambdaQuery()
                 .eq(User::getNo,user.getNo())
                 .eq(User::getPassword,user.getPassword()).list();
-        return list.size()>0?Result.suc(list.get(0)):Result.fail();
+
+
+        if (list.size()>0){
+            User user1 = (User)list.get(0);
+            List menuList = menuService.lambdaQuery().like(Menu::getMenuRight,user1.getRoleId()).list();
+            HashMap res = new HashMap();
+            res.put("user",user1);
+            res.put("menu",menuList);
+            return Result.suc(res);
+        }
+        return Result.fail();
     }
     //删除
     @GetMapping("/del")

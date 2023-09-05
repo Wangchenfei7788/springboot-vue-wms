@@ -1,12 +1,11 @@
 <script>
-import AdminManger from "@/components/admin/AdminManger.vue";
 
 export default {
   name: "AsideHome",
   data(){
     return{
      //isCollapse:false
-      menu:[
+     /* menu:[
         {
           nenuClick:'AdminManger',
           menuName:'管理员管理',
@@ -14,11 +13,11 @@ export default {
         },{
           nenuClick:'UserManger',
           menuName:'用户管理',
-          menuIcon:'el-icon-s-custom'
+          menuIcon:'el-icon-user-solid'
         },{
           nenuClick:'StorageManger',
           menuName:'仓库管理',
-          menuIcon:'el-icon-s-custom'
+          menuIcon:'el-icon-s-shop'
         },{
           nenuClick:'GoodTypeManger',
           menuName:'产品分类管理',
@@ -32,9 +31,16 @@ export default {
           menuName:'记录管理',
           menuIcon:'el-icon-s-order'
         }
-      ]
+      ]*/
     }
   },
+ computed:{
+   "menu":{
+     get(){
+       return this.$store.state.menu
+     }
+   }
+ },
   props:{
     isCollapse:Boolean
   }
@@ -63,7 +69,7 @@ export default {
       <span slot="title">首页</span>
     </el-menu-item>
 
-    <el-menu-item :index="'/'+item.nenuClick" v-for="(item,i) in menu" :key="i">
+    <el-menu-item :index="'/'+item.menuClick" v-for="(item,i) in menu" :key="i">
       <i :class="item.menuIcon"></i>
       <span slot="title">{{ item.menuName }}</span>
     </el-menu-item>

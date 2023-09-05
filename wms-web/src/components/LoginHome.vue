@@ -27,9 +27,12 @@ export default {
           this.$axios.post(this.$httpUrl+'/user/login',this.loginForm).then(res=>res.data).then(res=>{
             if(res.code==200){
               //存储
-              sessionStorage.setItem("CurUser",JSON.stringify(res.data))
+              sessionStorage.setItem("CurUser",JSON.stringify(res.data.user))
+              console.log(res.data.menu)
+              this.$store.commit("setMenu",res.data.menu)
               //跳转到IndexHome.vue
               this.$router.replace('/IndexHome');
+
               this.$message({
                 type:"success",
                 message:"登录成功"
