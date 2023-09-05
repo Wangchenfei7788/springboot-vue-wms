@@ -29,7 +29,9 @@ function addNewRoute(menuList){
             })
         }
     })
+    resetRouter()
     router.addRoutes(routes)
+
 }
 
 export default new Vuex.Store({
