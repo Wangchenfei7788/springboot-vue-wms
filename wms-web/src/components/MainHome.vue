@@ -24,7 +24,7 @@ export default {
       })
     };
     return {
-      tableData: [],
+      tablBeData: [],
       pageSize:15,
       pageNum:1,
       total:0,

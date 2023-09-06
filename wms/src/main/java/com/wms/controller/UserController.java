@@ -164,7 +164,7 @@ public class UserController {
         String name = (String)param.get("name");
         String sex = (String)param.get("sex");
         System.out.println("name==="+(String) param.get("name"));
-
+        String roleId = (String)param.get("roleId");
         Page<User> page = new Page();
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
@@ -174,7 +174,10 @@ public class UserController {
             lambdaQueryWrapper.like(User::getName,name);
         }
         if(StringUtils.isNotBlank(sex)){
-            lambdaQueryWrapper.like(User::getSex,sex);
+            lambdaQueryWrapper.eq(User::getSex,sex);
+        }
+        if(StringUtils.isNotBlank(roleId)){
+            lambdaQueryWrapper.eq(User::getRoleId,roleId);
         }
 
         //IPage result = userService.pageC(page);

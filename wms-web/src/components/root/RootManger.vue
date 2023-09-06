@@ -2,7 +2,7 @@
 
 
 export default {
-  name: "StorageManger",
+  name: "RootManger",
   data() {//默认值
     let checkAge = (rule, value, callback) => {
       if(value>150){
@@ -49,7 +49,7 @@ export default {
         age:'',
         phone:'',
         sex:'',
-        roleId:'1'
+        roleId:'0'
       },
       rules: {
         no: [
@@ -235,7 +235,7 @@ export default {
         param:{
           name:this.name,
           sex:this.sex,
-          roleId:'1'
+          roleId:'0'
         }
       }).then(res=>res.data).then(res=>{
         console.log(res)
