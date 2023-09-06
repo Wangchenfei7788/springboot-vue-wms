@@ -22,7 +22,7 @@ const routes = [
                     title:'首页'
                 }
             },
-           {
+           /*{
                 path:'/AdminManger',
                 name:'admin',
                 component:()=>import('../components/admin/AdminManger.vue'),
@@ -69,7 +69,7 @@ const routes = [
                 meta:{
                     title:'记录管理'
                 }
-            },
+            },*/
         ]
     }
 ]
