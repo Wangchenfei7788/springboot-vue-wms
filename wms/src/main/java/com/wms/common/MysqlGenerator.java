@@ -16,7 +16,7 @@ public class MysqlGenerator {
     /**
      * 数据源配置（修改成MySQL）
      */
-    protected static String URL = "jdbc:mysql://localhost:3306/wms?userSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true";
+    protected static String URL = "jdbc:mysql://localhost:3306/wms_mysql?userSSL=false&serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&allowPublicKeyRetrieval=true";
     protected static String USERNAME = "root";
     protected static String PASSWORD = "123456";
     //protected static String DRIVERNAME = "com.mysql.cj.jdbc.Driver";
