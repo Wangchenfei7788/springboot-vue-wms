@@ -6,6 +6,7 @@ export default {
   data() {//默认值
     return {
       tableData: [],
+
       pageSize:15,
       pageNum:1,
       total:0,
@@ -196,6 +197,7 @@ export default {
   <div>
     <div style="margin-bottom: 8px; margin-top: 8px;margin-left: 8px;text-align: center">
       <el-input v-model="name" placeholder="输入要查询的产品分类" suffix-icon="el-icon-search" style=" width:200px"></el-input>
+
       <el-button plain type="primary" style="margin-left: 8px" @click="loadPost">查询</el-button>
       <el-button plain type="info" @click="resetParam">重置</el-button>
       <el-button plain type="success" style="margin-left: 8px" @click="add">新增</el-button>
@@ -258,7 +260,10 @@ export default {
 
         <el-form-item label="备注" prop="remark">
           <el-col :span="20">
-            <el-input v-model="form.remark"></el-input>
+            <el-input  type="textarea"
+                       :rows="2"
+                       placeholder="请输入内容"
+                       v-model="form.remark"></el-input>
           </el-col>
         </el-form-item>
 
@@ -287,7 +292,10 @@ export default {
 
         <el-form-item label="备注" prop="remark">
           <el-col :span="20">
-            <el-input  v-model="form.remark"></el-input>
+            <el-input  type="textarea"
+                       :rows="2"
+                       placeholder="请输入内容"
+                       v-model="form.remark"></el-input>
           </el-col>
         </el-form-item>
       </el-form>

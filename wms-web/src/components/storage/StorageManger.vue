@@ -29,6 +29,7 @@ export default {
     }
   },
   methods:{
+
     resetForm() {
       this.$refs.form.resetFields();
     },
@@ -221,8 +222,7 @@ export default {
           <el-popconfirm
               title="确定删除吗？"
               @confirm="del(scope.row.id)"
-              style="margin-left: 8px"
-          >
+              style="margin-left: 8px">
             <el-button slot="reference" size="small" plain type="danger">删除</el-button>
           </el-popconfirm>
 

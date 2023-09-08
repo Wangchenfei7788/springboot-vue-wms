@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wms.common.QueryPageParam;
 import com.wms.common.Result;
+import com.wms.entity.Menu;
 import com.wms.entity.Storage;
 
 import com.wms.service.StorageService;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -52,6 +54,7 @@ public class StorageController {
         HashMap param = query.getParam();
         String name = (String)param.get("name");
 
+
         System.out.println("name==="+(String) param.get("name"));
 
 
@@ -64,11 +67,15 @@ public class StorageController {
             lambdaQueryWrapper.like(Storage::getName,name);
         }
 
-
         //IPage result = userService.pageC(page);
         IPage result = storageService.pageCC(page,lambdaQueryWrapper);
 
         System.out.println("total=="+result.getTotal());
         return Result.suc(result.getRecords(), result.getTotal());
+    }
+    @GetMapping("/list")
+    public Result list(){
+        List list = storageService.list();
+        return Result.suc(list);
     }
 }
