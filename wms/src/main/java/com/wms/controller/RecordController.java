@@ -1,6 +1,7 @@
 package com.wms.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -49,20 +50,25 @@ public class RecordController {
         page.setCurrent(query.getPageNum());
         page.setSize(query.getPageSize());
 
-        LambdaQueryWrapper<Record> lambdaQueryWrapper=new LambdaQueryWrapper();
+       QueryWrapper<Record> queryWrapper=new QueryWrapper();
+        queryWrapper.apply(" record.good=good.id and good.storage=storage.id and good.goodType=goodtype.id ");
         if(StringUtils.isNotBlank(name) && !"null".equals(name)){
             //lambdaQueryWrapper.like(Record::getName,name);
+
+            queryWrapper.like("good.name",name);
         }
         if(StringUtils.isNotBlank(goodType) && !"null".equals(goodType)){
             //lambdaQueryWrapper.eq(Record::getGoodType,goodType);
+            queryWrapper.eq("goodtype.id",goodType);
         }
         if(StringUtils.isNotBlank(storage) && !"null".equals(storage)){
             //lambdaQueryWrapper.eq(Record::getStorage,storage);
+            queryWrapper.like("storage.id",storage);
         }
 
 
         //IPage result = userService.pageC(page);
-        IPage result = recordService.pageCC(page,lambdaQueryWrapper);
+        IPage result = recordService.pageCC(page,queryWrapper);
 
         System.out.println("total=="+result.getTotal());
         return Result.suc(result.getRecords(), result.getTotal());

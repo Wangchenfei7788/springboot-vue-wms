@@ -8,7 +8,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -59,11 +58,23 @@ public class Record implements Serializable {
     @TableField("remark")
     private String remark;
 
-   @ApiModelProperty("取货人")
+    @ApiModelProperty("取货人")
     @TableField("username")
     private String username;
 
     @ApiModelProperty("操作人")
     @TableField("adminname")
     private String adminname;
+
+    @ApiModelProperty("产品")
+    @TableField("goodname")
+    private String goodname;
+
+    @ApiModelProperty("仓库")
+    @TableField("storagename")
+    private String storagename;
+
+    @ApiModelProperty("产品分类")
+    @TableField("goodtypename")
+    private String goodtypename;
 }

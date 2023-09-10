@@ -102,12 +102,36 @@ export default {
 
       })
     },
+    loadStorage(){
+      this.$axios.get(this.$httpUrl+'/storage/list').then(res=>res.data).then(res=>{
+        console.log(res)
+        if(res.code==200){
+          this.storageData=res.data
+          console.log(name)
+        }else {
+          alert('获取数据失败')
+        }
 
+      })
+    },
+    loadGoodType(){
+      this.$axios.get(this.$httpUrl+'/goodtype/list').then(res=>res.data).then(res=>{
+        console.log(res)
+        if(res.code==200){
+          this.goodtypeData=res.data
+          console.log(name)
+        }else {
+          alert('获取数据失败')
+        }
 
+      })
+    }
 
   },
   beforeMount() {
     //this.loadGet();
+    this.loadStorage()
+    this.loadGoodType()
     this.loadPost()
   }
 }
@@ -148,11 +172,12 @@ export default {
       </el-table-column>
       <el-table-column prop="id" label="序号" width="60">
       </el-table-column>
-      <el-table-column prop="name" label="产品" width="150">
+      <el-table-column prop="goodname" label="产品" width="150">
       </el-table-column>
-      <el-table-column prop="storage" label="仓库" width="200">
+      <el-table-column prop="storagename" label="仓库" width="200">
       </el-table-column>
-
+      <el-table-column prop="goodtypename" label="产品分类" width="200">
+      </el-table-column>
       <el-table-column prop="username" label="取货人" width="200">
       </el-table-column>
       <el-table-column prop="adminname" label="操作人" width="200">
