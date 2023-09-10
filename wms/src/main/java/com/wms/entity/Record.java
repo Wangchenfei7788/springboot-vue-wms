@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -22,6 +23,7 @@ import lombok.experimental.Accessors;
  */
 @Getter
 @Setter
+
 @Accessors(chain = true)
 @TableName("record")
 @ApiModel(value = "Record对象", description = "")
@@ -56,4 +58,12 @@ public class Record implements Serializable {
     @ApiModelProperty("备注")
     @TableField("remark")
     private String remark;
+
+   @ApiModelProperty("取货人")
+    @TableField("username")
+    private String username;
+
+    @ApiModelProperty("操作人")
+    @TableField("adminname")
+    private String adminname;
 }
