@@ -67,8 +67,8 @@ public class Record implements Serializable {
     private String adminname;
 
     @ApiModelProperty("产品")
-    @TableField("goodname")
-    private String goodname;
+    @TableField("goodName")
+    private String goodName;
 
     @ApiModelProperty("仓库")
     @TableField("storagename")

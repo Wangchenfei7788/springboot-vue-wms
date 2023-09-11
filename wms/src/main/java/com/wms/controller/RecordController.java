@@ -8,7 +8,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wms.common.QueryPageParam;
 import com.wms.common.Result;
 
+import com.wms.entity.Good;
 import com.wms.entity.Record;
+import com.wms.service.GoodService;
 import com.wms.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +33,8 @@ import java.util.HashMap;
 public class RecordController {
     @Autowired
     private RecordService recordService;
+    @Autowired
+    private GoodService goodService;
     @PostMapping("/listPage")//分页
     public Result listPage(@RequestBody QueryPageParam query){
 
@@ -72,5 +76,14 @@ public class RecordController {
 
         System.out.println("total=="+result.getTotal());
         return Result.suc(result.getRecords(), result.getTotal());
+    }
+    @PostMapping("/save")
+    public Result save(@RequestBody Record record){
+        Good good = goodService.getById(record.getGood());
+        int oldNum = record.getCount();
+        int newNum = good.getCount()+oldNum;
+        good.setCount(newNum);
+        goodService.updateById(good);
+        return recordService.save(record)?Result.suc():Result.fail();
     }
 }

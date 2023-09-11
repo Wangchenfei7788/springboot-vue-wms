@@ -12,6 +12,7 @@ export default {
       }
     };
     return {
+      user:JSON.parse(sessionStorage.getItem('CurUser')),
       tableData: [],
       goodtypeData:[],
       storageData:[],
@@ -23,6 +24,8 @@ export default {
       goodType: '',
       dialogVisible:false,
       dialogVisibleMod:false,
+      dialogVisiblePutin:false,
+      currentRow:{},
       form:{
         id:'',
         name:'',
@@ -30,6 +33,16 @@ export default {
         goodType:'',
         count:'',
         remark:''
+      },
+      formIn:{
+        good:'',
+        goodname:'',
+        count:'',
+        userId:'3',
+        adminId:'',
+        remark: '',
+      },
+      rulesIn:{
 
       },
       rules: {
@@ -49,18 +62,21 @@ export default {
   methods:{
     formatStorage(row){
       let temp = this.storageData.find(item=>{
-        return item.id = row.storage
+        return item.id == row.storage
       })
       return temp && temp.name
     },
     formatGoodType(row){
       let temp = this.goodtypeData.find(item=>{
-        return item.id = row.goodType
+        return item.id == row.goodType
       })
       return temp && temp.name
     },
     resetForm() {
       this.$refs.form.resetFields();
+    },
+    resetPutinForm(){
+      this.$refs.formIn.resetFields();
     },
     add(){
       this.dialogVisible = true
@@ -68,6 +84,22 @@ export default {
         this.resetForm()
         this.form.id=''
       })
+    },
+    putin(){
+     if (this.currentRow.id){
+       this.dialogVisiblePutin = true
+       this.$nextTick(()=>{
+         this.resetPutinForm()
+
+         this.formIn.goodname = this.currentRow.name
+         this.formIn.good = this.currentRow.id
+         this.formIn.adminId = this.user.id
+       })
+     }else {
+       this.$message.error('请选择要入库的产品');
+       return;
+     }
+
     },
     doSave(){
       this.$axios.post(this.$httpUrl+'/good/save',this.form).then(res=>res.data).then(res=>{
@@ -80,6 +112,7 @@ export default {
           });
           this.dialogVisible =false
           this.loadPost()
+          this.resetForm()
         }else {
           this.$notify.error({
             title: '错误',
@@ -168,6 +201,28 @@ export default {
       });
 
     },
+    doPutIn(){
+      this.$axios.post(this.$httpUrl+'/record/save',this.formIn).then(res=>res.data).then(res=>{
+        console.log(res)
+        if(res.code==200){
+          this.$notify({
+            title: '成功',
+            message: '入库成功',
+            type: 'success'
+          });
+          this.dialogVisiblePutin =false
+          this.loadPost()
+          this.resetPutinForm()
+        }else {
+          this.$notify.error({
+            title: '错误',
+            message: '入库失败',
+            type:'error'
+          });
+        }
+
+      })
+    },
     handleClose(done) {
       this.$confirm('确认关闭？')
           .then(_ => {
@@ -192,6 +247,9 @@ export default {
         console.log(res)
       })
     }, */
+    handleSelectChange(val) {
+      this.currentRow = val;
+    },
     resetParam(){
       this.name=''
       this.storage=''
@@ -277,16 +335,16 @@ export default {
       <el-button plain type="primary" style="margin-left: 8px" @click="loadPost">查询</el-button>
       <el-button plain type="info" @click="resetParam">重置</el-button>
       <el-button plain type="success" style="margin-left: 8px" @click="add">新增</el-button>
+      <el-button plain type="primary" style="margin-left: 8px" @click="putin">入库</el-button>
     </div>
     <el-table style="width: 100%"
               stripe
               border
               :data="tableData"
-              :header-cell-style="{background:'#f3f6fd' ,color:'#555'}">
-      <el-table-column
-          type="selection"
-          width="55">
-      </el-table-column>
+              :header-cell-style="{background:'#f3f6fd' ,color:'#555'}"
+              highlight-current-row
+              @current-change="handleSelectChange">
+
       <el-table-column prop="id" label="序号" width="60">
       </el-table-column>
       <el-table-column prop="name" label="产品" width="150">
@@ -420,6 +478,43 @@ export default {
       <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisibleMod = false">取 消</el-button>
     <el-button type="primary" @click="save">确 定</el-button>
+  </span>
+    </el-dialog>
+
+
+    <el-dialog
+        title="入库"
+        :visible.sync="dialogVisiblePutin"
+        width="30%"
+        :before-close="handleClose"
+        @close="resetPutinForm">
+
+      <el-form ref="formIn" :rules="rulesIn" :model="formIn" label-width="80px">
+
+        <el-form-item label="产品">
+          <el-col :span="20">
+            <el-input v-model="formIn.goodname" readonly></el-input>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="数量" prop="count">
+          <el-col :span="20">
+            <el-input v-model="formIn.count"></el-input>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="备注" prop="remark">
+          <el-col :span="20">
+            <el-input  type="textarea"
+                       :rows="2"
+                       placeholder="请输入内容"
+                       v-model="formIn.remark"></el-input>
+          </el-col>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisiblePutin = false">取 消</el-button>
+    <el-button type="primary" @click="doPutIn">确 定</el-button>
   </span>
     </el-dialog>
   </div>
