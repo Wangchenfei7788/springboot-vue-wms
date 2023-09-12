@@ -21,6 +21,7 @@ export default {
       name: '',
       storage: '',
       goodType: '',
+
       dialogVisible:false,
       dialogVisibleMod:false,
       form:{
@@ -172,17 +173,19 @@ export default {
       </el-table-column>
       <el-table-column prop="id" label="序号" width="60">
       </el-table-column>
-      <el-table-column prop="goodname" label="产品" width="150">
+      <el-table-column prop="goodName" label="产品" width="150">
       </el-table-column>
-      <el-table-column prop="storagename" label="仓库" width="200">
+      <el-table-column prop="storagename" label="仓库" width="150">
       </el-table-column>
-      <el-table-column prop="goodtypename" label="产品分类" width="200">
+      <el-table-column prop="goodtypename" label="产品分类" width="150">
       </el-table-column>
-      <el-table-column prop="username" label="取货人" width="200">
+      <el-table-column prop="username" label="入/出库人" width="200">
       </el-table-column>
       <el-table-column prop="adminname" label="操作人" width="200">
       </el-table-column>
-      <el-table-column prop="count" label="数量" width="200">
+      <el-table-column prop="count" label="数量" width="100">
+      </el-table-column>
+      <el-table-column prop="createtime" label="操作时间" width="200">
       </el-table-column>
       <el-table-column prop="remark" label="备注">
       </el-table-column>

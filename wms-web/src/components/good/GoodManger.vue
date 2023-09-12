@@ -1,8 +1,11 @@
 <script>
 
 
+import SelectUser from "@/components/user/SelectUser.vue";
+
 export default {
   name: "GoodManger",
+  components: {SelectUser},
   data() {//默认值
     let checkCount = (rule, value, callback) => {
       if(value>9999){
@@ -25,7 +28,9 @@ export default {
       dialogVisible:false,
       dialogVisibleMod:false,
       dialogVisiblePutin:false,
+      innerVisible:false,
       currentRow:{},
+      tempUser:{},
       form:{
         id:'',
         name:'',
@@ -38,7 +43,8 @@ export default {
         good:'',
         goodname:'',
         count:'',
-        userId:'3',
+        userId:'',
+        username:'',
         adminId:'',
         remark: '',
       },
@@ -222,6 +228,18 @@ export default {
         }
 
       })
+    },
+    selectUser(){
+      this.innerVisible = true
+    },
+    confirmUser(){
+      this.formIn.username =this.tempUser.name
+      this.formIn.userId =this.tempUser.id
+      this.innerVisible = false
+    },
+    doSelectUser(val){
+      console.log(val)
+      this.tempUser = val
     },
     handleClose(done) {
       this.$confirm('确认关闭？')
@@ -489,11 +507,29 @@ export default {
         :before-close="handleClose"
         @close="resetPutinForm">
 
+      <el-dialog
+          width="61%"
+          title="用户选择"
+          :visible.sync="innerVisible"
+          append-to-body>
+        <SelectUser @doSelectUser="doSelectUser"/>
+        <span slot="footer" class="dialog-footer">
+             <el-button @click="innerVisible = false">取 消</el-button>
+             <el-button type="primary" @click="confirmUser">确 定</el-button>
+        </span>
+      </el-dialog>
+
       <el-form ref="formIn" :rules="rulesIn" :model="formIn" label-width="80px">
 
         <el-form-item label="产品">
           <el-col :span="20">
             <el-input v-model="formIn.goodname" readonly></el-input>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="入/出库人">
+          <el-col :span="20">
+            <el-input v-model="formIn.username" @click.native="selectUser" readonly></el-input>
           </el-col>
         </el-form-item>
 

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wms.mapper.RecordMapper">
     <select id="pageCC" resultType="com.wms.entity.Record">
-        select  record.*,good.name goodname,storage.name storagename,goodtype.name goodtypename,
+        select  record.*,good.name goodName,storage.name storagename,goodtype.name goodtypename,
                 (select user.name from user where user.id=record.userId)username,
                 (select user.name from user where user.id=record.adminId)adminname
         from record ,good,storage,goodtype /* where record.good=good.id and good.storage=storage.id and good.goodType=goodtype.id */
