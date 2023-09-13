@@ -28,6 +28,7 @@ export default {
       dialogVisible:false,
       dialogVisibleMod:false,
       dialogVisiblePutin:false,
+      dialogVisiblePutout:false,
       innerVisible:false,
       currentRow:{},
       tempUser:{},
@@ -47,6 +48,7 @@ export default {
         username:'',
         adminId:'',
         remark: '',
+        action:'1'
       },
       rulesIn:{
 
@@ -100,12 +102,29 @@ export default {
          this.formIn.goodname = this.currentRow.name
          this.formIn.good = this.currentRow.id
          this.formIn.adminId = this.user.id
+         this.formIn.action='1'
        })
      }else {
        this.$message.error('请选择要入库的产品');
        return;
      }
 
+    },
+    putout(){
+      if (this.currentRow.id){
+        this.dialogVisiblePutout = true
+        this.$nextTick(()=>{
+          this.resetPutinForm()
+
+          this.formIn.goodname = this.currentRow.name
+          this.formIn.good = this.currentRow.id
+          this.formIn.adminId = this.user.id
+          this.formIn.action='2'
+        })
+      }else {
+        this.$message.error('请选择要出库的产品');
+        return;
+      }
     },
     doSave(){
       this.$axios.post(this.$httpUrl+'/good/save',this.form).then(res=>res.data).then(res=>{
@@ -223,6 +242,28 @@ export default {
           this.$notify.error({
             title: '错误',
             message: '入库失败',
+            type:'error'
+          });
+        }
+
+      })
+    },
+    doPutOut(){
+      this.$axios.post(this.$httpUrl+'/record/save',this.formIn).then(res=>res.data).then(res=>{
+        console.log(res)
+        if(res.code==200){
+          this.$notify({
+            title: '成功',
+            message: '出库成功',
+            type: 'success'
+          });
+          this.dialogVisiblePutout =false
+          this.loadPost()
+          this.resetPutinForm()
+        }else {
+          this.$notify.error({
+            title: '错误',
+            message: '出库失败',
             type:'error'
           });
         }
@@ -352,8 +393,10 @@ export default {
       </el-select>
       <el-button plain type="primary" style="margin-left: 8px" @click="loadPost">查询</el-button>
       <el-button plain type="info" @click="resetParam">重置</el-button>
-      <el-button plain type="success" style="margin-left: 8px" @click="add">新增</el-button>
-      <el-button plain type="primary" style="margin-left: 8px" @click="putin">入库</el-button>
+      <el-button plain type="success" style="margin-left: 8px" @click="add" v-if="user.roleId!=2">新增</el-button>
+      <el-button plain type="primary" style="margin-left: 8px" @click="putin" v-if="user.roleId!=2">入库</el-button>
+      <el-button plain type="primary" style="margin-left: 8px" @click="putout" v-if="user.roleId!=2">出库</el-button>
+
     </div>
     <el-table style="width: 100%"
               stripe
@@ -375,7 +418,7 @@ export default {
       </el-table-column>
       <el-table-column prop="remark" label="备注">
       </el-table-column>
-      <el-table-column prop="operate" label="操作" width="">
+      <el-table-column prop="operate" label="操作" width="" v-if="user.roleId!=2">
         <template slot-scope="scope">
           <el-button size="small" plain type="primary" @click="mod(scope.row)">编辑</el-button>
           <el-popconfirm
@@ -499,7 +542,7 @@ export default {
   </span>
     </el-dialog>
 
-
+<!--入库-->
     <el-dialog
         title="入库"
         :visible.sync="dialogVisiblePutin"
@@ -527,7 +570,7 @@ export default {
           </el-col>
         </el-form-item>
 
-        <el-form-item label="入/出库人">
+        <el-form-item label="入库人">
           <el-col :span="20">
             <el-input v-model="formIn.username" @click.native="selectUser" readonly></el-input>
           </el-col>
@@ -553,6 +596,65 @@ export default {
     <el-button type="primary" @click="doPutIn">确 定</el-button>
   </span>
     </el-dialog>
+
+
+<!--    出库-->
+    <el-dialog
+        title="出库"
+        :visible.sync="dialogVisiblePutout"
+        width="30%"
+        :before-close="handleClose"
+        @close="resetPutinForm">
+
+      <el-dialog
+          width="61%"
+          title="用户选择"
+          :visible.sync="innerVisible"
+          append-to-body>
+        <SelectUser @doSelectUser="doSelectUser"/>
+        <span slot="footer" class="dialog-footer">
+             <el-button @click="innerVisible = false">取 消</el-button>
+             <el-button type="primary" @click="confirmUser">确 定</el-button>
+        </span>
+      </el-dialog>
+
+      <el-form ref="formIn" :rules="rulesIn" :model="formIn" label-width="80px">
+
+        <el-form-item label="产品">
+          <el-col :span="20">
+            <el-input v-model="formIn.goodname" readonly></el-input>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="出库人">
+          <el-col :span="20">
+            <el-input v-model="formIn.username" @click.native="selectUser" readonly></el-input>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="数量" prop="count">
+          <el-col :span="20">
+            <el-input v-model="formIn.count"></el-input>
+          </el-col>
+        </el-form-item>
+
+        <el-form-item label="备注" prop="remark">
+          <el-col :span="20">
+            <el-input  type="textarea"
+                       :rows="2"
+                       placeholder="请输入内容"
+                       v-model="formIn.remark"></el-input>
+          </el-col>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+    <el-button @click="dialogVisiblePutout = false">取 消</el-button>
+    <el-button type="primary" @click="doPutOut">确 定</el-button>
+  </span>
+    </el-dialog>
+
+
+
   </div>
 </template>
 

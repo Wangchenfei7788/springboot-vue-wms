@@ -45,10 +45,10 @@ public class RecordController {
         String name = (String)param.get("name");
         String goodType = (String)param.get("goodType");
         String storage = (String)param.get("storage");
-
+        String roleId = (String)param.get("roleId");
+        String userId = (String)param.get("userId");
 
         System.out.println("name==="+(String) param.get("name"));
-
 
         Page<Record> page = new Page();
         page.setCurrent(query.getPageNum());
@@ -56,6 +56,12 @@ public class RecordController {
 
        QueryWrapper<Record> queryWrapper=new QueryWrapper();
         queryWrapper.apply(" record.good=good.id and good.storage=storage.id and good.goodType=goodtype.id ");
+
+       if ("2".equals(roleId)){
+           //queryWrapper.eq("goodtype.id",roleId);
+           queryWrapper.apply(" record.userId= "+userId);
+       }
+
         if(StringUtils.isNotBlank(name) && !"null".equals(name)){
             //lambdaQueryWrapper.like(Record::getName,name);
 
@@ -81,6 +87,11 @@ public class RecordController {
     public Result save(@RequestBody Record record){
         Good good = goodService.getById(record.getGood());
         int oldNum = record.getCount();
+        //出库
+        if ("2".equals(record.getAction())){
+            oldNum = -oldNum;
+            record.setCount(oldNum);
+        }
         int newNum = good.getCount()+oldNum;
         good.setCount(newNum);
         goodService.updateById(good);

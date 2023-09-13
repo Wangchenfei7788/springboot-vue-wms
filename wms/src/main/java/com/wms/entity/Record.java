@@ -65,8 +65,8 @@ public class Record implements Serializable {
     private String remark;
 
     @ApiModelProperty("取货人")
-    @TableField("username")
-    private String username;
+    @TableField("userName")
+    private String userName;
 
     @ApiModelProperty("操作人")
     @TableField("adminname")
@@ -83,4 +83,7 @@ public class Record implements Serializable {
     @ApiModelProperty("产品分类")
     @TableField("goodtypename")
     private String goodtypename;
+
+    @TableField(exist = false)
+    private String action;
 }

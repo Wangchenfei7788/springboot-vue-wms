@@ -12,6 +12,7 @@ export default {
       }
     };
     return {
+      user:JSON.parse(sessionStorage.getItem('CurUser')),
       tableData: [],
       goodtypeData:[],
       storageData:[],
@@ -90,6 +91,9 @@ export default {
           name:this.name,
           goodType:this.goodType+'',
           storage: this.storage+'',
+          roleId:this.user.roleId+'',
+          userId:this.user.id+'',
+
         }
       }).then(res=>res.data).then(res=>{
         console.log(res)
@@ -179,7 +183,7 @@ export default {
       </el-table-column>
       <el-table-column prop="goodtypename" label="产品分类" width="150">
       </el-table-column>
-      <el-table-column prop="username" label="入/出库人" width="200">
+      <el-table-column prop="userName" label="入/出库人" width="200">
       </el-table-column>
       <el-table-column prop="adminname" label="操作人" width="200">
       </el-table-column>
@@ -200,9 +204,6 @@ export default {
                    layout="total, sizes, prev, pager, next, jumper"
                    :total="total">
     </el-pagination>
-
-    <!--新增弹出窗口-->
-
   </div>
 </template>
 
