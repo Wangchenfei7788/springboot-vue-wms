@@ -7,6 +7,7 @@ import './assets/global.css'
 import VueRouter from "vue-router";
 import router from "@/router";
 import store from "./store";
+
 Vue.use(ElementUI,{size:'small'});
 Vue.use(VueRouter);
 Vue.prototype.$axios=axios;

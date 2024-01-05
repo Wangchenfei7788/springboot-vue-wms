@@ -64,7 +64,8 @@ export default {
           {validator:checkCount,trigger: 'blur'}
         ],
 
-      }
+      },
+      loading:false
     }
   },
   methods:{
@@ -316,6 +317,7 @@ export default {
 
     },
     loadPost(){
+      this.loading = true;
       this.$axios.post(this.$httpUrl+'/good/listPage',{
         pageSize:this.pageSize,
         pageNum:this.pageNum,
@@ -327,6 +329,9 @@ export default {
       }).then(res=>res.data).then(res=>{
         console.log(res)
         if(res.code==200){
+          setTimeout(() => {
+            this.loading = false;
+          }, 1000);
           this.tableData=res.data
           this.total=res.total
           console.log(name)
@@ -372,7 +377,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div v-loading.lock="loading">
     <div style="margin-bottom: 8px; margin-top: 8px;margin-left: 8px;text-align: center">
       <el-input v-model="name" placeholder="输入要查询的产品" suffix-icon="el-icon-search" style=" width:200px"></el-input>
       <el-select style="margin-left: 8px" v-model="storage" placeholder="请选择仓库">

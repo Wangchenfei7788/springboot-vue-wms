@@ -51,6 +51,7 @@ export default {
         sex:'',
         roleId:'2'
       },
+      loading:false,
       rules: {
         no: [
           {required: true, message: '请输入账号', trigger: 'blur'},
@@ -229,6 +230,7 @@ export default {
       this.sex=''
     },
     loadPost(){
+      this.loading = true;
       this.$axios.post(this.$httpUrl+'/user/listPageC1',{
         pageSize:this.pageSize,
         pageNum:this.pageNum,
@@ -240,6 +242,9 @@ export default {
       }).then(res=>res.data).then(res=>{
         console.log(res)
         if(res.code==200){
+          setTimeout(() => {
+            this.loading = false;
+          }, 1000);
           this.tableData=res.data
           this.total=res.total
           console.log(name)
@@ -259,7 +264,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div v-loading.lock="loading">
     <div style="margin-bottom: 8px; margin-top: 8px;margin-left: 8px;text-align: center">
       <el-input v-model="name" placeholder="输入要查询的姓名" suffix-icon="el-icon-search" style=" width:200px"></el-input>
       <el-select v-model="sex" filterable placeholder="请选择性别" style="margin-left: 8px">
