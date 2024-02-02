@@ -7,7 +7,7 @@ export default {
     return {
       tableData: [],
 
-      pageSize:15,
+      pageSize:10,
       pageNum:1,
       total:0,
       name: '',
@@ -179,7 +179,7 @@ export default {
         if(res.code==200){
           setTimeout(() => {
             this.loading = false;
-          }, 1000);
+          }, 1000);//遮罩1s
           this.tableData=res.data
           this.total=res.total
           console.log(name)

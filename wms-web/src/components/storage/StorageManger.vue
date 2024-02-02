@@ -6,7 +6,7 @@ export default {
   data() {//默认值
     return {
       tableData: [],
-      pageSize:15,
+      pageSize:10,
       pageNum:1,
       total:0,
       name: '',
@@ -22,7 +22,7 @@ export default {
       rules: {
 
         name: [
-          {required: true, message: '请输入仓库名', trigger: 'blur'},
+          {required: true, message: '请输入仓库名', trigger: 'blur'},//表单校验
         ],
 
 
@@ -179,7 +179,7 @@ export default {
         if(res.code==200){
           setTimeout(() => {
             this.loading = false;
-          }, 1000);
+          }, 1000);//遮罩1s
           this.tableData=res.data
           this.total=res.total
           console.log(name)
