@@ -1,6 +1,13 @@
 <script>
+import registerHome from "@/components/RegisterHome.vue";
+
 export default {
   name: "LoginHome",
+  computed: {
+    registerHome() {
+      return registerHome
+    }
+  },
   data(){
     return{
       confirm_disabled:false,
@@ -19,6 +26,9 @@ export default {
     }
   },
   methods:{
+    register(){
+      this.$router.replace("/register")
+    },
     confirm(){
       this.confirm_disabled=true;
       this.$refs.loginForm.validate((valid)=>{
@@ -75,7 +85,8 @@ export default {
                  autocomplete="off" show-password size="small" @keyup.enter.native="confirm"></el-input>
      </el-form-item>
      <el-form-item>
-       <el-button  type="primary" style="display: block;margin-left: 70px " @click="confirm" :disabled="confirm_disabled">登录</el-button>
+       <el-button @click="register" >注册</el-button>
+       <el-button  type="primary" @click="confirm" :disabled="confirm_disabled">登录</el-button>
      </el-form-item>
    </el-form>
  </div>

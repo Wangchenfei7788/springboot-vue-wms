@@ -10,6 +10,12 @@ const routes = [
 
     },
     {
+        path:'/register',
+        name:'register',
+        component:()=>import('../components/RegisterHome.vue')
+
+    },
+    {
         path:'/IndexHome',
         name:'index',
         component:()=>import('../components/IndexHome.vue'),
