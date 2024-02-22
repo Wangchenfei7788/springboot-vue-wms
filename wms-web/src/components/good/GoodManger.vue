@@ -240,11 +240,13 @@ export default {
           this.loadPost()
           this.resetPutinForm()
         }else {
+          console.log("error")
           this.$notify.error({
             title: '错误',
             message: '入库失败',
             type:'error'
           });
+          return false;
         }
 
       })
@@ -267,6 +269,7 @@ export default {
             message: '出库失败',
             type:'error'
           });
+          return false;
         }
 
       })

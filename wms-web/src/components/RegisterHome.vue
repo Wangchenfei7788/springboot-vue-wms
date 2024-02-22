@@ -268,7 +268,7 @@ export default {
             </el-col>
           </el-form-item>
         <el-form-item>
-          <el-button @click="replaceLogin"type="info" plain>登 录</el-button>
+          <el-button @click="replaceLogin" type="info" plain>登 录</el-button>
           <el-button @click="resetForm" plain>重 置</el-button>
           <el-button type="primary" @click="save">注 册</el-button>
         </el-form-item>
