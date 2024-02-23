@@ -1,6 +1,6 @@
 # springboot-vue-wms
 springboot-vue-wms仓库管理系统
-[Github项目地址](https://github.com/Wangchenfei7788/springboot-vue-wms)
+[Github项目地址](https://github.com/Wangchenfei7788/springboot-vue-wms.git)
 ## 项目描述：
 - 基于Vue和Spring Boot的前后端分离项目，提供仓库用户，物品，物品种类，记录以及物品出入管理等功能
 ### 实现功能：
