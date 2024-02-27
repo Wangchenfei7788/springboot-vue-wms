@@ -11,8 +11,18 @@ export default {
     return{
       isCollapse:false,
       aside_width:'200px',
-      icon:"el-icon-s-fold"
+      icon:"el-icon-s-fold",
+      menuHeight: {
+        height: "100%",
+        background: "#313888"
+      },
     }
+  },
+  created() {
+    //动态调整左侧菜单栏高度 document.documentElement.clientHeight
+    var docHeight = document.body.scrollHeight;
+    this.menuHeight.height = docHeight - 20 + "px";
+    console.log(this.menuHeight.height, "this.containerHeight.height");
   },
   methods:{
     doCollapse(){
@@ -33,7 +43,7 @@ export default {
 
 <template>
   <el-container style="height: 100%;margin: 0;padding: 0; border: 1px solid #eee">
-    <el-aside :width="aside_width" >
+    <el-aside :width="aside_width" :style="menuHeight">
       <AsideHome :isCollapse="isCollapse"></AsideHome>
     </el-aside>
 
@@ -52,6 +62,9 @@ export default {
 </template>
 
 <style scoped>
+.el-container{
+  height: 100%;
+}
 .el-header {
   background-color: #313888;
   color: #333;
@@ -61,7 +74,7 @@ export default {
   padding: 5px;
 }
 .el-menu {
-
+  height: 100%;
   line-height: 60px;
   overflow: hidden;
 }

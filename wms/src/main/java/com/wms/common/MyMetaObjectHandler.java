@@ -8,7 +8,7 @@ import java.util.Date;
 
 
 /**
- * 自动填充时间
+ * 自动填充时间(record表的时间填充)
  */
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {

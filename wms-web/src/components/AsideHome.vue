@@ -4,6 +4,8 @@ export default {
   name: "AsideHome",
   data(){
     return{
+
+
      //isCollapse:false
      /* menu:[
         {
@@ -32,12 +34,14 @@ export default {
           menuIcon:'el-icon-s-order'
         }
       ]*/
+
+
     }
   },
  computed:{
    "menu":{
      get(){
-       return this.$store.state.menu
+       return this.$store.state.menu//遍历动态路由
      }
    }
  },
@@ -87,6 +91,9 @@ export default {
 }
 .el-menu-item i{
   color: white;
+}
+.el-menu{
+  height: 100%;
 }
 
 </style>
