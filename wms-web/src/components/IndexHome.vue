@@ -61,20 +61,11 @@ export default {
 </template>
 
 <style scoped>
-.el-container{
-  height: 100%;
-}
+
 .el-header {
   background-color: #313888;
   color: #333;
   line-height: 60px;
 }
-.el-main {
-  padding: 5px;
-}
-.el-menu {
-  height: 100%;
-  line-height: 60px;
-  overflow: hidden;
-}
+
 </style>
