@@ -2,7 +2,7 @@
 
 import AsideHome from "@/components/AsideHome.vue";
 import HeaderHome from "@/components/HeaderHome.vue";
-import MainHome from "@/components/MainHome.vue";
+
 
 export default {
   name:"IndexHome",
