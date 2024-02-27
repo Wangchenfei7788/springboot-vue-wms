@@ -64,7 +64,6 @@ public class UserController {
                 .eq(User::getNo,user.getNo())
                 .eq(User::getPassword,user.getPassword()).list();
 
-
         if (list.size()>0){
             User user1 = (User)list.get(0);
             List menuList = menuService.lambdaQuery().like(Menu::getMenuRight,user1.getRoleId()).list();

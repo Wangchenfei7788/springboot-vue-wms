@@ -15,6 +15,116 @@ springboot-vue-wms仓库管理系统
 - 使用MyBatis-Plus进行数据库操作，实现数据的增删改查分页等功能
 - 使用MySQL作为数据库，存储用户信息、仓库信息，出入库信息等数据。
 
+## bug修复
+#### 1. 修复左侧导航菜单跟随右侧内容高度变化
+https://www.cnblogs.com/lxn2/p/14452083.html
+```vue
+<script>
+export default {
+  name: "IndexHome",
+  components: {HeaderHome, AsideHome},
+  data() {
+    return {
+      menuHeight: {
+        height: "100%",
+        background: "#313888"
+      },
+    }
+  },
+  created() {
+    //动态调整左侧菜单栏高度 document.documentElement.clientHeight
+    var docHeight = document.body.scrollHeight;//获取页面高度
+    this.menuHeight.height = docHeight - 10 + "px";
+  },
+}
+</script>
+
+<template>
+  <el-container style="height: 100%;margin: 0;padding: 0; border: 1px solid #eee">
+    <el-aside :width="aside_width" :style="menuHeight">
+      <AsideHome></AsideHome>
+    </el-aside>
+  </el-container>
+  </template>
+```
+#### 2. 修复vuex页面刷新数据丢失
+四种方法参考 https://blog.csdn.net/bidepanm/article/details/124686409
+
+vuex-persistedstate https://blog.csdn.net/qq_43340606/article/details/126020339
+
+1. 安装vuex-persistedstate
+```
+npm install vuex-persistedstate --save
+```
+2. 在store/index.js引入配置
+```js
+import createPersistedState from 'vuex-persistedstate';
+```
+3.引入插件
+```js
+plugins: [createPersistedState({
+        storage:window.sessionStorage//更改数据存储方式(默认储存方式为LocalStorage)
+    })]
+```
+> LocalStorage和SessionStorage区别
+> 
+> LocalStorage: 存储的数据不会因浏览器选项卡/窗口关闭而删除(永不过期,不会自动删除)
+> 
+> SessionStorage:  一旦浏览器选项卡/窗口关闭，存储在其中的数据就会被删除
+> 
+> https://juejin.cn/post/7149380173027573767 https://blog.csdn.net/weixin_41863239/article/details/86679056
+#### 3. 记录管理(record)中新增记录时createtime字段无法自动填充
+参考 https://blog.csdn.net/liudachu/article/details/119545992
+> 1.尝试修改数据库,修改后无效果
+> ![img.png](img.png)
+> 2.mybatis-plus自动填充时间
+> 
+> 参考 https://blog.csdn.net/lsqingfeng/article/details/113241362
+> 
+> 实体类添加注解
+> 
+> 参考 https://blog.csdn.net/qq_40241957/article/details/101772536
+>
+> ```java
+>    @ApiModelProperty("操作时间")
+>    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+>    @TableField(fill = FieldFill.INSERT)//填充策略,插入填充字段
+>    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+>    private Date createtime;
+>```
+> MetaObjectHandler 实现类
+> 
+> 参考 https://blog.csdn.net/qq_42875345/article/details/113273533
+> 
+> MetaObjectHandler接口在插入或者更新数据的时候，为字段指定默认值。
+> ```java
+> package com.wms.common;
+> import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+> import org.apache.ibatis.reflection.MetaObject;
+> import org.springframework.stereotype.Component;
+> 
+> import java.util.Date;
+>
+> /**
+> * 自动填充时间(record表的时间填充)
+> */
+>  @Component
+>  public class MyMetaObjectHandler implements MetaObjectHandler {
+> 
+>  @Override
+>  public void insertFill(MetaObject metaObject) {
+>     this.setFieldValByName("createtime",  new Date(), metaObject);//对应字段名
+> }
+> /**
+>   * 需要时配置,暂时不需要
+> */
+>  @Override
+>   public void updateFill(MetaObject metaObject) {
+>
+>   }
+>
+>  }
+> ```
 ### 后端功能实现
 - 添加mybatis-plus依赖
 ```xml
@@ -107,6 +217,10 @@ CREATE TABLE `goodtype`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 ```
 4. good表
+
+| id |   name    | storage | goodType | count | remark |
+|:--:|:---------:|:-------:|:--------:|:-----:|:------:|
+| 1  | Xiaomi 13 |    1    |    1     |  45   |   手机   |
 ```mysql
 -- ----------------------------
 -- Table structure for good
@@ -123,6 +237,10 @@ CREATE TABLE `good`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 ```
 5. storage表
+
+| id | name | remark |
+|:--:|:----:|:------:|
+| 1  | 上海仓库 |  上海地区  |
 ```mysql
 -- ----------------------------
 -- Table structure for storage
@@ -136,6 +254,10 @@ CREATE TABLE `storage`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb3 COLLATE = utf8mb3_general_ci ROW_FORMAT = DYNAMIC;
 ```
 6. record表
+
+| id | good | userId | adminId | count | createtime | remark |
+|:--:|:----:|:------:|:-------:|:-----:|:----------:|:------:|
+| 1  |  1   |   3    |    2    |  20   |    2023-09-09 22:01:37     |   入库   |
 ```mysql
 -- ----------------------------
 -- Table structure for record

@@ -1,7 +1,6 @@
 //路由文件
-
-
 import VueRouter from "vue-router";
+
 const routes = [
     {
         path:'/',

@@ -1,8 +1,6 @@
 package com.wms.common;
 
 import lombok.Data;
-
-
 import java.util.HashMap;
 
 @Data

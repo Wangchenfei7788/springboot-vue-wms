@@ -51,5 +51,7 @@ export default new Vuex.Store({
             return state.menu
         }
     },
-    plugins: [createPersistedState()]
+    plugins: [createPersistedState({
+        storage:window.sessionStorage//更改数据存储方式
+    })]
 })

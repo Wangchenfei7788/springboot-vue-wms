@@ -21,8 +21,7 @@ export default {
   created() {
     //动态调整左侧菜单栏高度 document.documentElement.clientHeight
     var docHeight = document.body.scrollHeight;
-    this.menuHeight.height = docHeight - 20 + "px";
-    console.log(this.menuHeight.height, "this.containerHeight.height");
+    this.menuHeight.height = docHeight - 10 + "px";
   },
   methods:{
     doCollapse(){
