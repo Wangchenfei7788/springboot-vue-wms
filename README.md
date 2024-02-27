@@ -96,7 +96,7 @@ plugins: [createPersistedState({
 > 
 > 参考 https://blog.csdn.net/qq_42875345/article/details/113273533
 > 
-> MetaObjectHandler接口在插入或者更新数据的时候，为字段指定默认值。
+> MetaObjectHandler接口在插入或者更新数据的时候为字段指定默认值。
 > ```java
 > package com.wms.common;
 > import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
