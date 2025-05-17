@@ -42,7 +42,7 @@ public class GoodController {
         return goodService.removeById(id)?Result.suc():Result.fail();
     }
 
-    @PostMapping("/listPage")//分页
+    @PostMapping("/listPage")
     public Result listPage(@RequestBody QueryPageParam query){
 
         System.out.println("num==="+query.getPageNum());

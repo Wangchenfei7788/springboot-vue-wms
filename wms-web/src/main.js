@@ -11,7 +11,7 @@ import store from "./store";
 Vue.use(ElementUI,{size:'small'});
 Vue.use(VueRouter);
 Vue.prototype.$axios=axios;
-Vue.prototype.$httpUrl='http://localhost:8090'
+Vue.prototype.$httpUrl='http://localhost:8090'//跨域请求
 Vue.config.productionTip = false
 
 new Vue({

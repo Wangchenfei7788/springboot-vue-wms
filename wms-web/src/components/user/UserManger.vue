@@ -24,6 +24,7 @@ export default {
       })
     };
     return {
+      sels: [],
       tableData: [],
       pageSize:10,
       pageNum:1,
@@ -87,6 +88,36 @@ export default {
     }
   },
   methods:{
+    handleSelectionChange(){
+      this.sels = sels;
+      console.log("选中的值",sels.map((item) => item.id));
+    },
+    batchDelect() {
+      // 删除前的提示
+      this.$confirm("确认删除记录吗?", "提示", {
+        type: "warning",
+      }).then(() => {
+        let ids = this.sels.map((item) => item.id);
+        // 根据后台想要的参数格式选择
+        // console.log(ids.join(",")); //1,2,3,4
+        // console.log(ids); //[1,2,3,4]
+        // 请求接口
+        this.$axios.get(this.$httpUrl+'/user/del?id='+ids).then(res=>res.data).then(res=>{
+          if (res.code == "200") {
+            this.$message({
+              message: "删除成功",
+              type: "success",
+            });
+          }else {
+            this.$message({
+              message:"删除失败",
+              type:"error"
+            })
+          }
+        });
+      });
+    },
+
     resetForm() {
       this.$refs.form.resetFields();
     },
@@ -278,15 +309,19 @@ export default {
       <el-button plain type="primary" style="margin-left: 8px" @click="loadPost">查询</el-button>
       <el-button plain type="info" @click="resetParam">重置</el-button>
       <el-button plain type="success" style="margin-left: 8px" @click="add">新增</el-button>
+      <el-button type="primary" @click="batchDelect" :disabled="this.sels.length === 0">批量删除</el-button>
     </div>
+
     <el-table style="width: 100%"
               stripe
               border
               :data="tableData"
-              :header-cell-style="{background:'#f3f6fd' ,color:'#555'}">
+              :header-cell-style="{background:'#f3f6fd' ,color:'#555'}"
+              :disabled="this.sels.length === 0">
       <el-table-column
           type="selection"
-          width="55">
+          width="55"
+          @selection-change="handleSelectionChange">
       </el-table-column>
       <el-table-column prop="id" label="序号" width="60">
       </el-table-column>

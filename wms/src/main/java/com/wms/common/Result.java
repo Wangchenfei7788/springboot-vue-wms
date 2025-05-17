@@ -2,6 +2,9 @@ package com.wms.common;
 
 import lombok.Data;
 
+/**
+ * 后端返回数据的封装
+ */
 @Data
 public class Result {
 
